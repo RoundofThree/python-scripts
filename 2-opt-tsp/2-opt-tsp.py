@@ -15,30 +15,36 @@ class TSP:
         ret = 0
         for idx in range(len(tour)):
             v_1 = tour[idx]
-            if idx == len(tour)-1:
-                v_2 = tour[0]
-            else:
-                v_2 = tour[idx+1]
+            v_2 = tour[(idx+1)%len(tour)]
             ret += self.weights[v_1][v_2]
         return ret
 
     # optimize 
     def optimize(self):
         N = len(self.tour)
-        for i in range(N-3):
-            for j in range(i+2, N-1):
+        # use heuristic for calculating the best local minimum        
+        bestTour = self.tour
+        bestD = self.d  
+        for i in range(N-2):
+            for j in range(i+2, N):
                 newTour = np.copy(self.tour)
-                newTour[i+1] = self.tour[j]
+                newTour[(i+1)%N] = self.tour[j%N]
                 tmp = i+2
                 for k in range(j-1, i, -1):
-                    newTour[tmp] = self.tour[k]
+                    newTour[tmp%N] = self.tour[k%N]
                     tmp += 1
                 newD = self.calculateWeight(newTour)
-                if newD < self.d:
-                    self.tour = np.copy(newTour)
-                    self.d = newD
-                    print(f"Tour: {self.printTour(self.tour)}, total distance: {self.d}")
-                    self.optimize()  # tail recursive 
+                if newD < bestD:
+                    bestTour = np.copy(newTour)
+                    bestD = newD
+
+        if self.d == bestD:
+            return    
+
+        self.tour = bestTour
+        self.d = bestD
+        print(f"Tour: {self.printTour(self.tour)}, total distance: {self.d}")
+        self.optimize()  # tail recursive 
 
     # map a list of integers to the corresponding list of strings 
     def printTour(self, tour):
