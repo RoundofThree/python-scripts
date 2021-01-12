@@ -87,11 +87,11 @@ def unit_propagation(formula):
     unit_clauses = [c for c in formula if len(c) == 1]
     while len(unit_clauses) > 0:
         unit = unit_clauses[0]
-        print("Unit propagation on ", unit)
         formula = bcp(formula, next(iter(unit)))
         assignment += [next(iter(unit))]
         if formula == -1:
             return -1, []
+        print("Unit propagation on ", unit)
         if not formula:
             return formula, assignment
         unit_clauses = [c for c in formula if len(c) == 1]
@@ -102,16 +102,18 @@ def variable_selection(formula):
     return random.choice(list(counter))
 
 def backtracking(formula, assignment):
-    formula, pure_assignment = pure_literal(formula)
-    formula, unit_assignment = unit_propagation(formula)
-    assignment = assignment + pure_assignment + unit_assignment
-    if formula == - 1:
+    while True:
+        formula, pure_assignment = pure_literal(formula)
+        formula, unit_assignment = unit_propagation(formula)
+        if not pure_assignment and not unit_assignment: break
+        assignment = assignment + pure_assignment + unit_assignment
+    if formula == -1:
         print("Unsatisfiable")
         return []
     if not formula:
         print("Solution: ", ' '.join(assignment))  # possible double output 
         return assignment
-
+    # resort to branching only if pure literal and unit assignment are not viable 
     variable = variable_selection(formula)
     print("Branch on ", variable)
     solution = backtracking(bcp(formula, variable), assignment + [variable])

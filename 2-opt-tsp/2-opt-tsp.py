@@ -1,7 +1,5 @@
 import numpy as np
 
-# convert A of input to 0, when output
-
 class TSP:
     def __init__(self, weights, tour, verticesMapping):
         self.tour = tour  # preorder traversal of MST, ordered list of ints   
