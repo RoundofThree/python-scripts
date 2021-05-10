@@ -1,4 +1,5 @@
-import numpy as np 
+import numpy as np
+from math import sqrt
 
 # Euclid distance
 def euclid(a, b):
@@ -32,37 +33,51 @@ class KMeans:
             r.append(0)  # cluster id col 
 
     def run_iteration(self):
+        self.iteration_n += 1
         # print(f"Iteration {self.iteration_n}")
         # for each point, compute the distance to each of the centroids 
-        # hard coded Euclidean distance 
-        for p in records:
+        for p in self.records:
             min_d = np.inf 
             chosen = 0
-            for i in range(len(centroids)):
-                d = self.distance(p[:-1], centroids[i])
+            for i in range(len(self.centroids)):
+                d = self.distance(p[:-1], self.centroids[i])
                 if d < min_d:
                     min_d = d 
                     chosen = i
             p[-1] = chosen
         # compute the mean k clusters
-        n_sum = [0 for i in range(len(centroids))]
-        cummulative_sum = [[0 for j in range(len(centroids[0]))] for i in range(len(centroids))]
-        for p in records:
-            for i in range(len(p)):
+        n_sum = [0 for i in range(len(self.centroids))]
+        cummulative_sum = [[0 for j in range(len(self.centroids[0]))] for i in range(len(self.centroids))]
+        for p in self.records:
+            for i in range(len(p)-1):
                 # update 
                 cummulative_sum[p[-1]][i] += p[i]
-                n_sum[p[-1]] += 1
-        for i in range(len(centroids)):
-            c = centroids[i]
+            n_sum[p[-1]] += 1
+        n_changes = 0
+        for i in range(len(self.centroids)):
+            c = self.centroids[i]
             for j in range(len(c)):
+                old = c[j]
                 c[j] = cummulative_sum[i][j] / n_sum[i]
+                # print(f"cummulative sum of centroid {i} is {cummulative_sum[i][j]}")
+                if old != c[j]:
+                    n_changes += 1 
+        return n_changes
     
     def print_table(self):
-        for r in records:
-            out = "(" + ", ".join(r[:-1]) + ")"
-            out + " -> "
-            for c in centroids:
-                out += self.distance(r[:-1], c)
+        # print(len(self.records))
+        print(f"Iteration {self.iteration_n}")
+        print()
+        for i in range(len(self.centroids)):
+            out = f"C{i}: "
+            c = self.centroids[i]
+            out += "(" + ", ".join(str(j) for j in c) + ")"
+            print(out)
+        for r in self.records:
+            out = "(" + ", ".join(str(i) for i in r[:-1]) + ") -> "
+            for c in self.centroids:
+                out += str(self.distance(r[:-1], c))
                 out += " | "
             out += "Cluster "
-            out += r[-1]
+            out += str(r[-1])
+            print(out)
