@@ -6,7 +6,7 @@ Given k and k manually selected initial clusters, run K-Means and display each i
 Input:
 
 ```bash 
-python3 Kmeans-driver.py table.csv 
+python3 Kmeans-driver.py --table_csv table.csv 
 Enter 3 points with 2, each separated by a single comma:
 0-> 2,10
 1-> 5,8

@@ -1,17 +1,18 @@
 from Kmeans import *
 import sys
 import csv
+import argparse
 
 def main():
-    if len(sys.argv) < 2:
-        print("\nError")
-        print("\nUsage: > Kmeans-driver.py <table.csv>")
-        sys.exit()
-
-    input_file = sys.argv[1]
+    parser = argparse.ArgumentParser(description="KMeans algorithm walkthrough. By Roundofthree.")
+    parser.add_argument("--table_csv", type=str, required=True, help="File path to a .csv file with the records.")
+    parser.add_argument("--metric", type=str, help="EUCLIDEAN or MANHATTAN")
+    arg = parser.parse_args()
+    table_csv = arg.table_csv 
+    metric = arg.metric 
     records = []
 
-    with open(input_file, 'r') as f:
+    with open(table_csv, 'r') as f:
         f = csv.reader(f, delimiter=',')
         for line in f:
             r = [int(i) for i in line]
@@ -32,7 +33,7 @@ def main():
             input_array = list(map(int, input("Try again: "+i+"-> ").strip().split(",")))
         centroids.append(input_array)
     
-    kmeans = KMeans(records=records, k=k, centroids=centroids)
+    kmeans = KMeans(records=records, k=k, centroids=centroids, metric=metric)
     kmeans.print_table()
     while True:
         n_changes = kmeans.run_iteration()

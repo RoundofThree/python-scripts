@@ -20,14 +20,14 @@ def manhattan(a, b):
     return ret
 
 class KMeans:
-    def __init__(self, records=[], k=0, centroids=[], metric="EUCLID"):
+    def __init__(self, records=[], k=0, centroids=[], metric="EUCLIDEAN"):
         self.iteration_n = 1
         self.records = records
         self.k = k
         self.centroids = centroids
-        if metric == "EUCLID":
+        if metric == "EUCLIDEAN":
             self.distance = euclid
-        else:
+        else:  # metric == "MANHATTAN"
             self.distance = manhattan
         for r in records:
             r.append(0)  # cluster id col 
