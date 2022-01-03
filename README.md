@@ -11,3 +11,7 @@
 | [Watermark remover](watermark_removal) | Remove watermark given a watermark mask and try to predict the pixel colors behind the watermark (in the provided examples, inpainting works horrible). |
 | [K-Means](k-means) | Given a set of points and a k, calculate the clusters. Display the intermediate iterations. It supports Euclidean and Manhattan distance metrics. |
 | [Hunt's algorithm](huntsDT) | Build a Decision Tree using Hunt's algorithm and GINI index. | 
+| [Feistel cipher](feistel) | Highly customizable Feistel cipher with choice to verbose output. | 
+| [Block cipher modes of operation](block_modes_op) | ECB, CBC, CFB, OFB for custom encryption function | 
+
+<!-- TODO: modes of operation, simple DES, DES -->

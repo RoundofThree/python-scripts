@@ -109,9 +109,3 @@ if __name__ == '__main__':
     # compute preorder traversal of tree as a list 
     tsp_solver = TSP(np_cost, mst_preorder, verticesMapping)
     tsp_solver.optimize()
-    
-
-        
-
-    
-        
