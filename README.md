@@ -13,5 +13,9 @@
 | [Hunt's algorithm](huntsDT) | Build a Decision Tree using Hunt's algorithm and GINI index. | 
 | [Feistel cipher](feistel) | Highly customizable Feistel cipher with choice to verbose output. | 
 | [Block cipher modes of operation](block_modes_op) | ECB, CBC, CFB, OFB for custom encryption function | 
+| [Fiat-Shamir protocol](fiat-shamir) | Fiat-Shamir protocol communication and Pamela cheat strategy. |
+| [RSA](rsa) | RSA simulation. |
+| [DES](des) | DES algorithm simulation. |
+| [SDES](sdes) | S-DES algorithm simulation. |
 
 <!-- TODO: modes of operation, simple DES, DES -->

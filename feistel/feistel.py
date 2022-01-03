@@ -22,6 +22,13 @@ def subkey_generator(key, round):
     end = round * length
     return key[start:end]
 
+# incremental changes
+def subkey_generator2(key, round):
+    ret = key
+    for i in range(round-1):
+        ret = xor(ret, "1011")
+    return ret
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Feistel cipher. By Roundofthree.")
@@ -37,9 +44,9 @@ if __name__ == '__main__':
     # prompt for key input
     key = input("Input key: ")
     
-    n_rounds = 3 # number of rounds
+    n_rounds = 5 # number of rounds
     for round in range(1, n_rounds+1):
-        subkey = subkey_generator(key, round)
+        subkey = subkey_generator2(key, round)
         le, re = re, xor(le, round_function(re, subkey)) # updated simultaneously
         if verbose:
             print(f"LE {round} = {le}")
